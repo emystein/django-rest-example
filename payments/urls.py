@@ -17,10 +17,31 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from webhooks.models import Event
+from rest_framework import routers, serializers, viewsets
+
+# Serializers define the API representation.
+class EventSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Event
+        fields = ['id_at_origin', 'type', 'created_at', 'object', 'customer_id', 'payment_url']
+
+
+# ViewSets define the view behavior.
+class EventViewSet(viewsets.ModelViewSet):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+
+
+# Routers provide an easy way of automatically determining the URL conf.
+router = routers.DefaultRouter()
+router.register(r'events', EventViewSet)
 
 urlpatterns = [
+    path('', include(router.urls)),
     path('admin/', admin.site.urls),
-    path("webhooks/", include("webhooks.urls")),
+    path('webhooks/', include('webhooks.urls')),
+    path('api-auth/', include('rest_framework.urls'))
 ]
 
 # https://stackoverflow.com/questions/12800862/how-to-make-django-serve-static-files-with-gunicorn
