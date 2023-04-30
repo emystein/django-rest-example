@@ -1,3 +1,10 @@
 from django.db import models
 
-# Create your models here.
+
+class Event(models.Model):
+    id_at_origin = models.CharField()
+    type = models.CharField()
+    created_at = models.DateTimeField("Date created")
+    object = models.CharField()
+    customer_id = models.CharField()
+    payment_url = models.CharField()
