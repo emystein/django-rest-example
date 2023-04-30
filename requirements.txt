@@ -4,3 +4,4 @@ gunicorn
 djangorestframework
 markdown
 django-filter
+django-environ
