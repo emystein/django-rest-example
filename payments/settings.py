@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'payments.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'stripe-payments',
+        'NAME': 'payments',
         'HOST': 'localhost',
         'USER': 'payments'
     }
